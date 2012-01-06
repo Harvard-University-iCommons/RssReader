@@ -4,10 +4,55 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAI0NvLcZ6AIGrsXWrV_Jg-BR-ItZtfys1-SV2ohcoJiTTIODY5BTzpB-20zoANEkxvOSGQhczVckEIA"></script>
-        <script type="text/javascript">
+    	<script type="text/javascript">
+    		// <![CDATA[  
     		google.load("feeds", "1");
-        	
 			function initialize() {
+				var channels = ${channelList};
+				var display_title = ${readerTopic.displayTitle};
+				var display_date = ${readerTopic.displayDate};
+				var display_desc = ${readerTopic.displayDescription};
+				
+				var container = document.getElementById('rss-reader-content-${pageContentId}');
+				//for (var channel in channels) {
+				$(channels).each(function(){
+					var feed = new google.feeds.Feed(this.source);
+					feed.load(function(result) {
+					  if (!result.error) {
+						container.innerHTML += '<div class="rss_feed">';
+						if ( display_title == 1 ) {
+							container.innerHTML += '<h3 class="rss_feed_title">' + result.feed.title + '</h3>';  
+						}
+						for (var i = 0; i < result.feed.entries.length; i++) {
+						  var entry = result.feed.entries[i];
+						  if ( entry.publishedDate ) {
+							  var pdate = new Date(entry.publishedDate);
+							  entry.localPublishedDate = pdate.toLocaleDateString() + ' ' + pdate.toLocaleTimeString();
+						  }
+						  //container.innerHTML += tmpl("item_tmpl",entry);
+						  container.innerHTML += '<div class="rss_entry">';
+						  
+						  container.innerHTML += '<h4 class="rss_entry_title"><a href="'+entry.link+'">'+entry.title+'</a></h4>';		
+
+						  if ( display_date == 1 ) {
+							  container.innerHTML += '<p class="rss_entry_pubdate">'+entry.localPublishedDate+'</p>';		
+						  }
+						  if ( display_desc == 1 ) {
+							  container.innerHTML += '<p class="rss_entry_content">'+entry.content+'</p>';		
+						  }
+						  
+						  
+						  
+						  container.innerHTML += '</div>';
+						  
+						}
+						container.innerHTML += "</div>";
+					  }
+					});                
+				});
+			}
+        	
+			function old_initialize() {
 				var channels = ${channelList};
 				
 				var feedControl = new google.feeds.FeedControl();
@@ -26,9 +71,30 @@
 			}
 			
     		google.setOnLoadCallback(initialize);
+    		]]>
     	</script>
     </head>
     <body>
+		<style>
+			.rss_entry {
+				clear: both;
+			}
+			.rss_entry_pubdate {
+				margin-top: 0em;
+				font-style: oblique;
+			}
+			.rss_entry_title {
+				padding-top: 1.5em;
+				margin-bottom: 0em;
+			}
+			.rss_entry_content {
+				margin-left: 2em;
+				margin-bottom: 1em;
+			}
+			.rss_hide {
+				display: none;
+			}
+		</style>    	
     	<style>
     		.rss-reader-content{
 				margin: 0;
