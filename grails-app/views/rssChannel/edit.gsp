@@ -151,7 +151,7 @@
 			                                id: 'pref-display-title',
 		                                    xtype: 'checkbox',
 		                                    hideLabel: true,
-		                                    boxLabel: 'Diplay channel title',
+		                                    boxLabel: 'Display channel title',
 		                                    name: 'displayTitle',
 		                                    checked: rssReaderTopic.displayTitle == '1'
 		                                },{
@@ -182,9 +182,6 @@
 		                                    name: 'displayNumberOfItems',
 		                                    width: 30,
 		                                    value: rssReaderTopic.displayNumberOfItems
-		                                },{
-		                                    xtype: 'label',
-		                                	text: "Hint: enter 'all' to display all recent items"
 		                                }]
 	                                }]
                                 }],

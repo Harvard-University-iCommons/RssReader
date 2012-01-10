@@ -12,16 +12,29 @@
 				var display_title = ${readerTopic.displayTitle};
 				var display_date = ${readerTopic.displayDate};
 				var display_desc = ${readerTopic.displayDescription};
-				
-				var container = document.getElementById('rss-reader-content-${pageContentId}');
+				var display_count = ${readerTopic.displayNumberOfItems};
+				if ( display_count == 'all' ) {
+					display_count = 100;
+				}
+				if ( display_count == '' || display_count == null) {
+					display_count = 4;
+				}
+								
+				var outercontainer = document.getElementById('rss-reader-content-${pageContentId}');
 				//for (var channel in channels) {
+				var i = 0;
 				$(channels).each(function(){
 					var feed = new google.feeds.Feed(this.source);
+					var container = $(outercontainer).children()[i];
+					i++;
+					
+					feed.setNumEntries(display_count);
 					feed.load(function(result) {
 					  if (!result.error) {
-						container.innerHTML += '<div class="rss_feed">';
+						var feed_html = '';
+						feed_html += '<div class="rss_feed">';
 						if ( display_title == 1 ) {
-							container.innerHTML += '<h3 class="rss_feed_title">' + result.feed.title + '</h3>';  
+							feed_html += '<h3 class="rss_feed_title">' + result.feed.title + '</h3>';  
 						}
 						for (var i = 0; i < result.feed.entries.length; i++) {
 						  var entry = result.feed.entries[i];
@@ -30,40 +43,31 @@
 							  entry.localPublishedDate = pdate.toLocaleDateString() + ' ' + pdate.toLocaleTimeString();
 						  }
 						  //container.innerHTML += tmpl("item_tmpl",entry);
-						  container.innerHTML += '<div class="rss_entry">';
+						  var entry_html;
+						  feed_html += '<div class="rss_entry">';
 						  
-						  container.innerHTML += '<h4 class="rss_entry_title"><a href="'+entry.link+'">'+entry.title+'</a></h4>';		
+						  feed_html += '<h4 class="rss_entry_title"><a href="'+entry.link+'">'+entry.title+'</a></h4>';		
 
 						  if ( display_date == 1 ) {
-							  container.innerHTML += '<p class="rss_entry_pubdate">'+entry.localPublishedDate+'</p>';		
+							  feed_html += '<p class="rss_entry_pubdate">'+entry.localPublishedDate+'</p>';		
 						  }
 						  if ( display_desc == 1 ) {
-							  container.innerHTML += '<p class="rss_entry_content">'+entry.content+'</p>';		
+							  feed_html += '<p class="rss_entry_content">'+entry.content+'</p>';		
 						  }
 						  
 						  
 						  
-						  container.innerHTML += '</div>';
-						  
-						}
-						container.innerHTML += "</div>";
+						  feed_html += '</div>';
+							 
+						 }
+						 feed_html += "</div>";
+						 container.innerHTML += feed_html;
+
 					  }
 					});                
 				});
 			}
         	
-			function old_initialize() {
-				var channels = ${channelList};
-				
-				var feedControl = new google.feeds.FeedControl();
-				$(channels).each(function(){
-					feedControl.addFeed(this.source, this.title);
-				});
-				
-				feedControl.setNumEntries(${readerTopic.displayNumberOfItems});
-				feedControl.draw(document.getElementById('rss-reader-content-${pageContentId}'));
-				setTimeout("styleRssFeeds()", 500)
-			}
 
 			function styleRssFeeds() {
 				$('.gfc-result:even').addClass('gfc-resultEven');
@@ -142,21 +146,12 @@
 				border-bottom: 1px solid #dddddd;	
 			}
     	</style>
-    	<g:set var="styles"></g:set>
-    	<g:if test="${readerTopic.displayTitle != '1'}">
-    		<g:set var="styles" value="${styles} hide-title"/>
-    	</g:if>
-    	<g:if test="${readerTopic.displayDate != '1'}">
-    		<g:set var="styles" value="${styles} hide-date"/>
-    	</g:if>
-    	<g:if test="${readerTopic.displayDescription != '1'}">
-    		<g:set var="styles" value="${styles} hide-description"/>
-    	</g:if>
     	<div class="rss-reader-content">
-    		<div class="${styles}">
-    			<div id="rss-reader-content-${pageContentId}">
-    			</div>
-    		</div>
-    	</div>
+   			<div id="rss-reader-content-${pageContentId}">
+   				<g:each in="${channels}" var="c">
+   				<div> </div>
+   				</g:each>
+   			</div>
+	   	</div>
     </body>
 </html>

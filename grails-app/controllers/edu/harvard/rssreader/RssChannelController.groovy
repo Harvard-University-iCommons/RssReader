@@ -20,15 +20,15 @@ class RssChannelController {
 		} .collect {
 			RssChannel.get(it.channelId)
 		}
-		
-		
+				
 		withFormat {
 			html {
 				render(
 					view: channels.size() > 0 ? 'list' : 'empty',
 					model: [
-						readerTopic:readerTopic, 
-						channelList:channels as JSON, 
+						readerTopic:readerTopic,
+						channels:channels, 
+						channelList:channels as JSON,
 						topicId:params.topicId.replaceAll('\\.', '_'), 
 						pageContentId:params.pageContentId.replaceAll('\\.', '_'),
 						isAdmin: IsitesPermissionUtils.hasAdminPermission(params.permissions)
@@ -62,8 +62,13 @@ class RssChannelController {
 	
 	def create = {
 		def readerId = RssReaderUtils.parseReaderIdFromIsitesParams(params)
-		def source = params.source.trim()
+		def source = new StringBuffer( params.source.trim() )
 		
+		//if the URL starts with feed://, change it to http://
+		if ( source.toString().startsWith('feed:') ) {
+			source.replace(0, 4, 'http')
+		}
+
 		def xmlFeed
 		try {
 			def http = new HTTPBuilder(source)
