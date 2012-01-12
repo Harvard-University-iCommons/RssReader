@@ -49,10 +49,10 @@
 						  feed_html += '<h4 class="rss_entry_title"><a href="'+entry.link+'">'+entry.title+'</a></h4>';		
 
 						  if ( display_date == 1 ) {
-							  feed_html += '<p class="rss_entry_pubdate">'+entry.localPublishedDate+'</p>';		
+							  feed_html += '<div class="rss_entry_pubdate">'+entry.localPublishedDate+'</div>';		
 						  }
 						  if ( display_desc == 1 ) {
-							  feed_html += '<p class="rss_entry_content">'+entry.content+'</p>';		
+							  feed_html += '<div class="rss_entry_content">'+entry.content+'</div>';		
 						  }
 						  
 						  
