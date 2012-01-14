@@ -79,68 +79,43 @@
     	</script>
     </head>
     <body>
-		<style>
-			.rss_entry {
-				clear: both;
-			}
-			.rss_entry_pubdate {
-				margin-top: 0em;
-				font-style: oblique;
-			}
-			.rss_entry_title {
-				padding-top: 1.5em;
-				margin-bottom: 0em;
-			}
-			.rss_entry_content {
-				margin-left: 2em;
-				margin-bottom: 1em;
-			}
-			.rss_hide {
-				display: none;
-			}
-		</style>    	
     	<style>
-    		.rss-reader-content{
-				margin: 0;
-				padding: 0;
-			}
-			.gfc-resultsHeader{
-			    border: none;
-			}
-			.gfc-title{
+			.rss_feed_title{
 				font-family: Arial, sans-serif;
 				font-size: 19pt;
 				line-height: 29px;
-				padding: 20px 0px 20px 0px;
-				display:inline-block;/*
+				display:inline-block;
+				font-weight:normal;/*
 				width: 100%;
 				border: solid 1px #d2d2d2;*/
 			}
-			.gf-title {
-				height: auto;
-			}
-			.gf-title a{
+			
+			.rss_entry_title a{
 				color: #8e0f22;
 				padding-bottom: 5px;
 			}
-			.gf-title a:hover{
+			
+			.rss_entry_title a:hover{
 				text-decoration:none;
 			}
-			.gf-author
-			, .gf-spacer
-			, .gf-relativePublishedDate{
+			
+			.rss_entry_pubdate{
 				display:inline-block;
 				font-size: 0.8em;
 				color: #5d5d5d;
-				padding-bottom: 10px;
+				padding: 5px 0 10px;
 			}
-			.gfc-result{
-				padding: 20px 0 20px 20px;
+			
+			h4.rss_entry_title {margin-bottom:0px;}
+			
+			.rss_entry{
+				padding: 0px 0 20px 20px;
 			}
-			.gfc-resultOdd{
+			.resultOdd{
 				background-color:#fff;
 			}
-			.gfc-resultEven{
+			
+			.resultEven{
 				background-color:#f6f6f6;
 				border-top: 1px solid #dddddd;
 				border-bottom: 1px solid #dddddd;	
