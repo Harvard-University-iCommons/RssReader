@@ -44,8 +44,15 @@
 						  }
 						  //container.innerHTML += tmpl("item_tmpl",entry);
 						  var entry_html;
-						  feed_html += '<div class="rss_entry">';
-						  
+
+						  // add the resultEven and resultOdd classes:
+						  if ( i%2 == 0 ) {
+							  feed_html += '<div class="rss_entry resultEven">';
+						  }
+						  else {
+							  feed_html += '<div class="rss_entry resultOdd">';
+						  }	
+						  					  
 						  feed_html += '<h4 class="rss_entry_title"><a href="'+entry.link+'">'+entry.title+'</a></h4>';		
 
 						  if ( display_date == 1 ) {
@@ -67,13 +74,7 @@
 					});                
 				});
 			}
-        	
-
-			function styleRssFeeds() {
-				$('.gfc-result:even').addClass('gfc-resultEven');
-				$('.gfc-result:odd').addClass('gfc-resultOdd');
-			}
-			
+        				
     		google.setOnLoadCallback(initialize);
     		]]>
     	</script>
