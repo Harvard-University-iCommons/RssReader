@@ -34,13 +34,23 @@
 						var feed_html = '';
 						feed_html += '<div class="rss_feed">';
 						if ( display_title == 1 ) {
-							feed_html += '<h3 class="rss_feed_title">' + result.feed.title + '</h3>';  
+							feed_html += '<h4 class="rss_feed_title">' + result.feed.title + '</h4>';  
 						}
 						for (var i = 0; i < result.feed.entries.length; i++) {
 						  var entry = result.feed.entries[i];
 						  if ( entry.publishedDate ) {
 							  var pdate = new Date(entry.publishedDate);
-							  entry.localPublishedDate = pdate.toLocaleDateString() + ' ' + pdate.toLocaleTimeString();
+							  var h = pdate.getHours();
+							  var m = pdate.getMinutes();
+							  var dp = "AM";
+							  
+							  if ( h > 12 ) { h = h-12; dp = "PM";}
+							  if ( h == 0 ) { h = 12; }
+
+							  if ( m < 10 ) { m = "0"+m; }
+							  
+							  entry.localPublishedDate = pdate.toLocaleDateString() + ' ' 
+							  + h + ':' + m + ' ' + dp;
 						  }
 						  //container.innerHTML += tmpl("item_tmpl",entry);
 						  var entry_html;
@@ -83,11 +93,11 @@
     	<style>
 			.rss_feed_title{
 				font-family: Arial, sans-serif;
-				font-size: 19pt;
-				line-height: 29px;
+				//line-height: 29px;
+				font-size: 2em;
 				display:inline-block;
-				font-weight:normal;/*
-				width: 100%;
+				font-weight: normal; 
+				/* width: 100%;
 				border: solid 1px #d2d2d2;*/
 			}
 			
@@ -110,7 +120,7 @@
 			h4.rss_entry_title {margin-bottom:0px;}
 			
 			.rss_entry{
-				padding: 0px 0 20px 20px;
+				padding: 0px 0 10px 20px;
 			}
 			.resultOdd{
 				background-color:#fff;
