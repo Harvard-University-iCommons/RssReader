@@ -93,12 +93,8 @@
     	<style>
 			.rss_feed_title{
 				font-family: Arial, sans-serif;
-				//line-height: 29px;
-				font-size: 2em;
 				display:inline-block;
 				font-weight: normal; 
-				/* width: 100%;
-				border: solid 1px #d2d2d2;*/
 			}
 			
 			.rss_entry_title a{
@@ -120,7 +116,7 @@
 			h4.rss_entry_title {margin-bottom:0px;}
 			
 			.rss_entry{
-				padding: 0px 0 10px 20px;
+				padding: 5px 0 5px 20px;
 			}
 			.resultOdd{
 				background-color:#fff;
